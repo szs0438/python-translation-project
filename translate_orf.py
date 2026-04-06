@@ -35,3 +35,29 @@ def translate_first_orf(sequence,
 'UUG':'Leu','UUA':'Leu','UGA':'Stop','UUC':'Phe'
 },
 ):
+
+"""
+Find the first ORF and translate it into an amino acid sequence.
+"""
+
+orf = find_first_orf(sequence, start_codons, stop_codons)
+
+if not orf:
+    return None
+
+amino_acids = []
+
+for i in range(0, len(orf), 3):
+    codon = orf[i:i+3]
+
+    if len(codon) < 3:
+        break
+
+    aa = genetic_code.get(codon, "Unknown")
+
+    if aa == "Stop":
+        break
+
+    amino_acids.append(aa)
+
+return amino_acids
